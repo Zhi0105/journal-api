@@ -36,6 +36,7 @@
  <!--
   ENV:
     DATABASE_URL="postgresql://postgres:123@localhost:5434/journal?schema=public"
+    JWT_SECRET="super-secret" 
  -->
 
 <!--
