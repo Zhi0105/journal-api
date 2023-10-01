@@ -2,28 +2,28 @@ import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 
 export class RegisterDto {
 
-  @IsNotEmpty()
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   username: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   password: string
 
 }
 
 export class LoginDto {
 
-  @IsNotEmpty()
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   password: string
 
 }
