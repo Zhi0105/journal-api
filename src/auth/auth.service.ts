@@ -29,7 +29,7 @@ export class AuthService {
         })
         // remove password being seen in response
         // delete user.password  
-        return this.signToken(user.id, user.email)
+        return this.signToken(user.id, user.username, user.email)
 
     }catch(error) {
       if ( error instanceof PrismaClientKnownRequestError ) {
@@ -57,14 +57,15 @@ export class AuthService {
     
     // remove password being seen in response
     // delete user.password  
-    return this.signToken(user.id, user.email)
+    return this.signToken(user.id, user.username, user.email)
   }
   
-  async signToken(user_id: number, email: string): Promise<{ access_token: string }> {
+  async signToken(user_id: number, username: string, email: string): Promise<{ access_token: string }> {
     
     const secret = this.config.get('JWT_SECRET')
     const payload = {
       sub: user_id,
+      username,
       email
     }
     const token = await this.jwt.signAsync(payload, {
