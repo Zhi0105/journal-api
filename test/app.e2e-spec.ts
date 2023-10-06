@@ -4,6 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { PrismaService } from '@src/prisma/prisma.service'
 import * as pactum from 'pactum'
 import { RegisterDto, LoginDto } from '@src/auth/dto'
+import { UpdateUserDto } from '@src/user/dto'
 
 describe('App e2e', () => { 
   let app: INestApplication
@@ -151,7 +152,22 @@ describe('App e2e', () => {
         .expectStatus(200)
       })
     })
-    describe('Update user', () => {})
+    describe('Update user', () => {
+      it('should update user', () => {
+        const dto: UpdateUserDto = {
+          email: 'sample@email.com',
+          username: 'sample',
+        }
+        return pactum
+        .spec()
+        .patch('/users/update')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .withBody(dto)
+        .expectStatus(200)
+      })
+    })
   })
 
   describe('Category', () => {
