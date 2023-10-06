@@ -5,6 +5,7 @@ import { PrismaService } from '@src/prisma/prisma.service'
 import * as pactum from 'pactum'
 import { RegisterDto, LoginDto } from '@src/auth/dto'
 import { UpdateUserDto } from '@src/user/dto'
+import { CreateCategoryDto, EditCategoryDto } from '@src/category/dto'
 
 describe('App e2e', () => { 
   let app: INestApplication
@@ -171,11 +172,105 @@ describe('App e2e', () => {
   })
 
   describe('Category', () => {
-    describe('Create category', () => {})
-    describe('Get category', () => {})
-    describe('Get category by id', () => {})
-    describe('Update category by id', () => {})
-    describe('Delete category by id', () => {})
+
+    describe('Get empty category', () => {
+      it('should get category', () => {
+        return pactum
+        .spec()
+        .get('/category/all')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .expectStatus(200)
+        .expectBody([])
+      })
+    })
+
+    describe('Create category', () => {
+      it('should create category', () => {
+        const dto: CreateCategoryDto = {
+          title: "test category"
+        }
+        return pactum
+        .spec()
+        .post('/category/create')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .withBody(dto)
+        .expectStatus(201)
+        .stores('category_id', 'id')
+      })
+    })
+
+    describe('Get category', () => {
+      it('should get category', () => {
+        return pactum
+        .spec()
+        .get('/category/all')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .expectStatus(200)
+        .expectJsonLength(1)
+      })
+    })
+
+    describe('Get category by id', () => {
+      it('should get category by id', () => {
+        return pactum
+        .spec()
+        .get('/category/{id}')
+        .withPathParams('id', '$S{category_id}')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .expectStatus(200)
+        .expectBodyContains('$S{category_id}')
+      })
+    })
+    
+    describe('Update category by id', () => {
+      it('should update category by id', () => {
+        const dto: EditCategoryDto = {
+            title: "new category name"
+        }
+        return pactum
+        .spec()
+        .patch('/category/{id}')
+        .withPathParams('id', '$S{category_id}')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .withBody(dto)
+        .expectStatus(200)
+        .expectBodyContains(dto.title)
+      })
+    })
+
+    describe('Delete category by id', () => {
+      it('should delete category by id', () => {
+        return pactum
+        .spec()
+        .delete('/category/{id}')
+        .withPathParams('id', '$S{category_id}')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .expectStatus(204)
+      })
+
+      it('should get empty category', () => {
+          return pactum
+          .spec()
+          .get('/category/all')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .expectStatus(200)
+          .expectJsonLength(0)
+      })
+    })
   })
   
 })
