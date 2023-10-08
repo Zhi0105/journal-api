@@ -6,6 +6,7 @@ import * as pactum from 'pactum'
 import { RegisterDto, LoginDto } from '@src/auth/dto'
 import { UpdateUserDto } from '@src/user/dto'
 import { CreateCategoryDto, EditCategoryDto } from '@src/category/dto'
+import { CreateTaskDto, EditTaskDto, GetTaskByCategory } from '@src/task/dto'
 
 describe('App e2e', () => { 
   let app: INestApplication
@@ -29,12 +30,12 @@ describe('App e2e', () => {
     await prisma.cleanDb()
     pactum.request.setBaseUrl('http://localhost:3333')
   })
-  
+    
   afterAll(() => {
     app.close()
   })
 
-
+  
   describe('Auth', () => {
     const signup: RegisterDto = {
       email: 'test@email.com',
@@ -139,7 +140,6 @@ describe('App e2e', () => {
       })
     })
   })
-  
 
   describe('User', () => {
     describe('Get me', () => {
@@ -185,7 +185,6 @@ describe('App e2e', () => {
         .expectBody([])
       })
     })
-
     describe('Create category', () => {
       it('should create category', () => {
         const dto: CreateCategoryDto = {
@@ -202,7 +201,6 @@ describe('App e2e', () => {
         .stores('category_id', 'id')
       })
     })
-
     describe('Get category', () => {
       it('should get category', () => {
         return pactum
@@ -215,7 +213,6 @@ describe('App e2e', () => {
         .expectJsonLength(1)
       })
     })
-
     describe('Get category by id', () => {
       it('should get category by id', () => {
         return pactum
@@ -229,7 +226,6 @@ describe('App e2e', () => {
         .expectBodyContains('$S{category_id}')
       })
     })
-    
     describe('Update category by id', () => {
       it('should update category by id', () => {
         const dto: EditCategoryDto = {
@@ -248,6 +244,125 @@ describe('App e2e', () => {
       })
     })
 
+  })
+
+  describe('Task', () => {
+    describe('Get empty task', () => {
+      it('should get task', () => {
+        return pactum
+        .spec()
+        .get('/task/all')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .expectStatus(200)
+        .expectBody([])
+      })
+    })
+    describe('Create task', () => {
+      it('should create task', async() => {
+        const category = await prisma.category.findFirst()
+        const dto: CreateTaskDto = {
+          name: "test task",
+          category_id: category.id
+        }
+        return pactum
+        .spec()
+        .post('/task/create')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .withBody(dto)
+        .expectStatus(201)
+        .stores('task_id', 'id')
+        .inspect()
+      })
+    })
+    describe('Get task', () => {
+     
+      it('should get task by user', () => {
+        return pactum
+        .spec()
+        .get('/task/all')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .expectStatus(200)
+        .expectJsonLength(1)
+      })
+      it('should get task by user with specific category', async() => {
+        const category = await prisma.category.findFirst()
+        const dto: GetTaskByCategory = {
+          category_id: category.id
+        }
+        return pactum
+        .spec()
+        .get('/task/all')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .withBody(dto)
+        .expectStatus(200)
+        .expectJsonLength(1)
+      })
+    })
+    describe('Get task by id', () => {
+      it('should get task by id', () => {
+        return pactum
+        .spec()
+        .get('/task/{id}')
+        .withPathParams('id', '$S{task_id}')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .expectStatus(200)
+        .expectBodyContains('$S{task_id}')
+      })
+    })
+    describe('Update task by id', () => {
+      it('should update task by id', async() => {
+        const category = await prisma.category.findFirst()
+        const dto: EditTaskDto = {
+          name: "new task name",
+          category_id: category.id
+        }
+        return pactum
+        .spec()
+        .patch('/task/{id}')
+        .withPathParams('id', '$S{task_id}')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .withBody(dto)
+        .expectStatus(200)
+        .expectBodyContains(dto.name)
+      })
+    })
+  })
+
+  describe('Delete models', () => {
+    describe('Delete task by id', () => {
+      it('should delete task by id', () => {
+        return pactum
+        .spec()
+        .delete('/task/{id}')
+        .withPathParams('id', '$S{task_id}')
+        .withHeaders({
+          Authorization: 'Bearer $S{userAt}'
+        })
+        .expectStatus(204)
+      })
+      it('should get empty task', () => {
+          return pactum
+          .spec()
+          .get('/task/all')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .expectStatus(200)
+          .expectJsonLength(0)
+      })
+    })
     describe('Delete category by id', () => {
       it('should delete category by id', () => {
         return pactum

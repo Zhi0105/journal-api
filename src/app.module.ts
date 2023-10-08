@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [ 
@@ -12,8 +13,9 @@ import { PrismaModule } from './prisma/prisma.module';
       }),
       AuthModule, 
       UserModule, 
-      CategoryModule, 
-      PrismaModule 
+      CategoryModule,
+      TaskModule, 
+      PrismaModule  
     ],
 })
 
