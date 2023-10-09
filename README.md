@@ -47,9 +47,11 @@
 CLONE GUIDE COMMAND:
   yarn install
   yarn db:dev:up
+  yarn db:test:up
   npx prisma init
   yarn db:dev:restart
+  yarn db:test:restart
   npx prisma generate
-  npx prisma studio
-
+  yarn prisma:dev  -- prisma development
+  yarn prisma:test -- prisma test
  -->
