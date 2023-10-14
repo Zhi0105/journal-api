@@ -8,7 +8,7 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async UpdateUser (user_id: number, dto: UpdateUserDto) {
-    await argon.hash(dto.password)
+    await argon.hash(dto.password) // update new hash
     const user = await this.prisma.user.update({
       where: {
         id: user_id
