@@ -8,17 +8,33 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async UpdateUser (user_id: number, dto: UpdateUserDto) {
-    await argon.hash(dto.password) // update new hash
-    const user = await this.prisma.user.update({
-      where: {
-        id: user_id
-      },
-      data: {
-        ...dto
-      }
-    })
+    
+    if(dto.password){
+      let hash = await argon.hash(dto.password)
+      let user = await this.prisma.user.update({
+        where: {
+          id: user_id
+        },
+        data: {
+          username: dto.username,
+          email: dto.email,
+          password: hash
+        }
+      })
+      
+      delete user.password
+      return user
+    }
+    let user = await this.prisma.user.update({
+        where: {
+          id: user_id
+        },
+        data: {
+          ...dto
+        }
+      })
 
-    delete user.password
-    return user
+      delete user.password
+      return user
   }
 }
