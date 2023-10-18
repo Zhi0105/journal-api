@@ -10,6 +10,9 @@ export class CategoryService {
     return this.prisma.category.findMany({
       where: {
         user_id
+      },
+      orderBy:{
+        id: "asc"
       }
     })
   }
