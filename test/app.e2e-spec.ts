@@ -297,7 +297,7 @@ describe('App e2e', () => {
         }
         return pactum
         .spec()
-        .get('/task/all')
+        .get('/task/category')
         .withHeaders({
           Authorization: 'Bearer $S{userAt}'
         })

@@ -9,12 +9,18 @@ import { CreateTaskDto, EditTaskDto, GetTaskByCategory } from './dto';
 export class TaskController {
   constructor(private taskService: TaskService) {}
   
+
   @Get('all')
-  getTasks(
+  getTask(@GetUser('id') user_id: number) {
+    return this.taskService.getTask(user_id)
+  }
+
+  @Get('category')
+  getTasksByCategory(
     @GetUser('id') user_id: number,
     @Body() dto?: GetTaskByCategory
   ) {
-      return this.taskService.getTasks(user_id, dto)
+      return this.taskService.getTasksByCategory(user_id, dto)
   }
 
   @Get(':id')
