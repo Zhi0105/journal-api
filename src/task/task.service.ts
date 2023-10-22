@@ -5,7 +5,19 @@ import { PrismaService } from '@src/prisma/prisma.service';
 @Injectable()
 export class TaskService {
   constructor(private prisma: PrismaService) {}
-  getTasks(user_id: number, dto?: GetTaskByCategory) {
+
+  getTask(user_id: number) {
+    return this.prisma.task.findMany({
+      where: {
+        user_id
+      },
+      orderBy:{
+        id: "asc"
+      }
+    })
+  }
+
+  getTasksByCategory(user_id: number, dto?: GetTaskByCategory) {
 
     // IF USER WANT TO GET TASK BY SPECIFIC CATEGORY
     if(dto){
@@ -91,5 +103,4 @@ export class TaskService {
       }
     })
   }
-
 }
