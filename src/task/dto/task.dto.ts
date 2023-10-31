@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
-
 export class GetTaskByCategory {
   @IsNumber()
   @IsOptional()
@@ -12,6 +11,10 @@ export class CreateTaskDto {
   @IsNotEmpty()
   name: string
 
+  @IsString()
+  @IsNotEmpty()
+  description: string
+
   @IsNumber()
   @IsNotEmpty()
   category_id: number
@@ -19,9 +22,17 @@ export class CreateTaskDto {
 
 export class EditTaskDto {
   @IsString()
-  @IsNotEmpty()
-  name: string
+  @IsOptional()
+  name?: string
 
+  @IsString()
+  @IsOptional()
+  description?: string
+
+  @IsString()
+  @IsOptional()
+  status?: string
+  
   @IsNumber()
   @IsNotEmpty()
   category_id: number

@@ -43,6 +43,8 @@ model Category {
 model Task {
   id          Int    @id @default(autoincrement())
   name        String
+  description String @default("")
+  status      String @default("open")
   category_id Int
   user_id     Int
 

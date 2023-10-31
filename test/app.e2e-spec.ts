@@ -264,6 +264,7 @@ describe('App e2e', () => {
         const category = await prisma.category.findFirst()
         const dto: CreateTaskDto = {
           name: "test task",
+          description: "test description",
           category_id: category.id
         }
         return pactum
@@ -324,6 +325,8 @@ describe('App e2e', () => {
         const category = await prisma.category.findFirst()
         const dto: EditTaskDto = {
           name: "new task name",
+          description: "updated description",
+          status: "updated status",
           category_id: category.id
         }
         return pactum
