@@ -41,10 +41,12 @@ model Category {
 }
 
 model Task {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
-  description String @default("")
-  status      String @default("open")
+  description String   @default("")
+  status      String   @default("open")
+  start_date  DateTime
+  end_date    DateTime
   category_id Int
   user_id     Int
 
