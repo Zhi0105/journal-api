@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { Type } from "class-transformer";
 
 export class GetTaskByCategory {
   @IsNumber()
@@ -18,6 +19,16 @@ export class CreateTaskDto {
   @IsNumber()
   @IsNotEmpty()
   category_id: number
+
+  @IsDate()
+  @IsNotEmpty()
+  @Type(() => Date)
+  start_date: Date
+
+  @IsDate()
+  @IsNotEmpty()
+  @Type(() => Date)
+  end_date: Date
 }
 
 export class EditTaskDto {
@@ -32,6 +43,16 @@ export class EditTaskDto {
   @IsString()
   @IsOptional()
   status?: string
+
+  @IsDate()
+  @IsOptional()
+  @Type(() => Date)
+  start_date?: Date
+
+  @IsDate()
+  @IsOptional()
+  @Type(() => Date)
+  end_date?: Date
   
   @IsNumber()
   @IsNotEmpty()

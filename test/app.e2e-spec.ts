@@ -265,6 +265,8 @@ describe('App e2e', () => {
         const dto: CreateTaskDto = {
           name: "test task",
           description: "test description",
+          start_date: new Date(),
+          end_date: new Date(),
           category_id: category.id
         }
         return pactum
@@ -327,6 +329,8 @@ describe('App e2e', () => {
           name: "new task name",
           description: "updated description",
           status: "updated status",
+          start_date: new Date(),
+          end_date: new Date(),
           category_id: category.id
         }
         return pactum
