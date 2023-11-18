@@ -27,4 +27,6 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
+EXPOSE 3333
+
 CMD [ "node", "dist/main" ]
