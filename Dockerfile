@@ -29,4 +29,4 @@ COPY --from=development /usr/src/app/dist ./dist
 
 EXPOSE 3333
 
-CMD [ "npm", "dist/main.js" ]
+CMD [ "node", "dist/main.js" ]
