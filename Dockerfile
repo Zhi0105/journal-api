@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN npx prisma init
+
 RUN npx prisma generate
 
 RUN npm run build
@@ -27,6 +29,6 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-EXPOSE 5434
+EXPOSE 8080
 
 CMD [ "node", "dist/main" ]
