@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
+RUN npx prisma init
+
+RUN npx prisma migrate
+
 RUN npx prisma generate
 
 RUN npm run build
@@ -23,10 +27,16 @@ COPY package*.json ./
 
 RUN npm install --only=prod
 
+RUN npx prisma init
+
+RUN npx prisma migrate
+
+RUN npx prisma generate
+
 COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-EXPOSE 8080
+EXPOSE 5434
 
 CMD [ "node", "dist/main" ]
