@@ -27,12 +27,6 @@ COPY package*.json ./
 
 RUN npm install --only=prod
 
-RUN npx prisma init
-
-RUN npx prisma migrate
-
-RUN npx prisma generate
-
 COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
