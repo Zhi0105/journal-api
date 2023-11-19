@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+COPY .env ./
+
 RUN npx prisma generate
 
 RUN npm run build
@@ -29,4 +31,4 @@ COPY --from=development /usr/src/app/dist ./dist
 
 EXPOSE 3333
 
-CMD [ "node", "dist/main.js" ]
+CMD [ "npm", "run", "start:prod" ]
