@@ -6,7 +6,7 @@ services:
       context: .
       args:
         - JWT_SECRET=super_secret
-        - DATABASE_URL=postgresql://postgres:123@journalapi:5434/journal?schema=public
+        - DATABASE_URL="postgresql://postgres:123@journalapi:5434/journal?schema=public"
       dockerfile: Dockerfile
     ports:
       - '3333:3333'
