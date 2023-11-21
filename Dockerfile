@@ -1,5 +1,9 @@
 FROM node:18-alpine AS development
 
+ARG POSTGRES_HOST
+ARG POSTGRES_PWD
+ENV DATABASE_URL="postgresql://postgres:${POSTGRES_PWD}@${POSTGRES_HOST}:5434/journal?schema=public"
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
