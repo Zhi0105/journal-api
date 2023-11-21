@@ -2,11 +2,11 @@ FROM node:18-alpine AS development
 
 ARG POSTGRES_HOST
 ARG POSTGRES_PWD
-ENV DATABASE_URL="postgresql://postgres:${POSTGRES_PWD}@${POSTGRES_HOST}:5434/journal?schema=public"
+ENV DATABASE_URL="postgresql://postgres:${POSTGRES_PWD}@${POSTGRES_HOST}:5434/mydb?schema=public"
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package*.json ./ 
 
 RUN npm install npm@latest -g
 
