@@ -1,9 +1,8 @@
 FROM node:18-alpine AS development
 
-ARG JWT_SECRET
-ENV JWT_SECRET=${JWT_SECRET}
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
+ARG POSTGRES_PWD
+ENV JWT_SECRET=super-secret
+ENV DATABASE_URL="postgresql://postgres:${POSTGRES_PWD}}@journalapi:5434/journal?schema=public"
 
 WORKDIR /usr/src/app
 
