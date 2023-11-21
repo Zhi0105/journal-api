@@ -4,7 +4,6 @@ services:
     build:
       context: .
       args:
-         - POSTGRES_HOST=journal
          - POSTGRES_PWD=123
       dockerfile: Dockerfile
     ports:
