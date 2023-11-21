@@ -1,11 +1,12 @@
 version: '3.8'
 services:
   app:
+    container_name: journalapi
     build:
       context: .
       args:
-         - POSTGRES_HOST=journalapi
-         - POSTGRES_PWD=123
+        - JWT_SECRET=super_secret
+        - DATABASE_URL=postgresql://postgres:123@journalapi:5434/journal?schema=public
       dockerfile: Dockerfile
     ports:
       - '3333:3333'
