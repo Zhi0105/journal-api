@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-         - POSTGRES_HOST=app-postgres
+         - POSTGRES_HOST=journalapi
          - POSTGRES_PWD=123
       dockerfile: Dockerfile
     ports:
