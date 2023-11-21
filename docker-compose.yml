@@ -8,6 +8,8 @@ services:
       - '3333:3333'
     depends_on:
       - database
+    env_file:
+      - .env
   db:
     image: postgres:13
     restart: always
