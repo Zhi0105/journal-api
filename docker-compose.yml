@@ -3,6 +3,9 @@ services:
   app:
     build:
       context: .
+      args:
+         - POSTGRES_HOST=app-postgres
+         - POSTGRES_PWD=123
       dockerfile: Dockerfile
     ports:
       - '3333:3333'
