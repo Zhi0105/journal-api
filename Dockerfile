@@ -14,8 +14,6 @@ RUN npm install
 
 COPY . .
 
-RUN docker compose up db -d
-
 RUN npx prisma migrate deploy
 
 RUN npx prisma generate
