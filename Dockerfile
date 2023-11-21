@@ -2,7 +2,7 @@ FROM node:18-alpine AS development
 
 ARG POSTGRES_PWD
 ENV JWT_SECRET=super-secret
-ENV DATABASE_URL="postgresql://postgres:${POSTGRES_PWD}}@journalapi:5434/journal?schema=public"
+ENV DATABASE_URL="postgresql://postgres:${POSTGRES_PWD}}@localhost:5434/journal?schema=public"
 
 WORKDIR /usr/src/app
 
@@ -13,6 +13,8 @@ RUN npm install npm@latest -g
 RUN npm install
 
 COPY . .
+
+RUN docker compose up db -d
 
 RUN npx prisma migrate deploy
 
