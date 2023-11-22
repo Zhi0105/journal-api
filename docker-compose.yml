@@ -3,15 +3,11 @@ services:
   app:
     build:
       context: .
-      args:
-        -POSTGRES_PWD=123
+      # args:
+      #   -POSTGRES_PWD=123
       dockerfile: Dockerfile
     ports:
       - '3333:3333'
-    depends_on:
-      - database
-    env_file:
-      - .env
   db:
     image: postgres:13
     restart: always
