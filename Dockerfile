@@ -1,25 +1,22 @@
 FROM node:18-alpine AS development
 
-# ARG POSTGRES_PWD
-# ENV JWT_SECRET=super-secret
-# ENV DATABASE_URL="postgresql://postgres:${POSTGRES_PWD}}@localhost:5434/journal?schema=public"
-
 WORKDIR /usr/src/app
 
 COPY package*.json ./ 
+
+COPY prisma ./prisma/
+
+COPY .env ./
+
+COPY . .
 
 RUN npm install npm@latest -g
 
 RUN npm install
 
-COPY . .
-
-RUN npx prisma migrate deploy
-
 RUN npx prisma generate
 
-RUN npm run build
-
+# RUN npm run build
 # FROM node:18-alpine AS production
 
 # ARG NODE_ENV=production
@@ -44,8 +41,7 @@ RUN npm run build
 # COPY --from=development /usr/src/app/dist ./dist
 
 
-EXPOSE 3333
+EXPOSE 8080
 
-
-CMD [ "node", "dist/main" ]
-# CMD ["npm", "run", "start:prod"]
+# CMD [ "node", "dist/main" ]
+CMD ["npm", "run", "start:prod"]
