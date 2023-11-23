@@ -7,7 +7,7 @@ services:
       #   -POSTGRES_PWD=123
       dockerfile: Dockerfile
     ports:
-      - '3333:3333'
+      - '5436:5432'
   db:
     image: postgres:13
     restart: always
