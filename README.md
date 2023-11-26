@@ -55,3 +55,10 @@ CLONE GUIDE COMMAND:
   yarn prisma:dev  -- prisma development
   yarn prisma:test -- prisma test
  -->
+
+<!--
+PROD:
+docker build -t filofax .
+docker run -p 3333:3333 --env-file .env -d filofax
+docker-compose up -d
+ -->

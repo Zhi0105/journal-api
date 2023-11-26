@@ -1,47 +1,25 @@
-FROM node:18-alpine AS development
+FROM node:18 As builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./ 
-
 COPY prisma ./prisma/
-
-COPY .env ./
-
-COPY . .
-
-RUN npm install npm@latest -g
 
 RUN npm install
 
-RUN npx prisma generate
+COPY . .
 
-# RUN npm run build
-# FROM node:18-alpine AS production
+RUN npm run build
 
-# ARG NODE_ENV=production
-# ENV NODE_ENV=${NODE_ENV}
+FROM node:18
 
-# WORKDIR /usr/src/app
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
 
-# COPY package*.json ./
-# COPY prisma ./prisma/
+COPY --from=builder /app/prisma ./prisma
 
-# RUN npm install npm@latest -g
+EXPOSE 3333
 
-# RUN npm install --only=prod
-
-# RUN npx prisma generate
-
-# COPY . .
-
-# # COPY --from=development /usr/src/app/dist ./dist
-# COPY --from=development ./node_modules ./node_modules
-# COPY --from=development ./package*.json ./
-# COPY --from=development /usr/src/app/dist ./dist
-
-
-EXPOSE 8080
-
-# CMD [ "node", "dist/main" ]
-CMD ["npm", "run", "start:prod"]
+# CMD ["npm", "run", "start:prod"]
+CMD [  "npm", "run", "start:migrate:prod" ]
