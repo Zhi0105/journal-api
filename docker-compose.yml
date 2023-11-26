@@ -1,30 +1,48 @@
 version: '3.8'
 services:
-  app:
+  nest-api:
+    container_name: hopeful
     build:
       context: .
-      # args:
-      #   -POSTGRES_PWD=123
       dockerfile: Dockerfile
     ports:
-      - '5436:5432'
-  db:
-    image: postgres:13
-    restart: always
-    ports:
-      - 5434:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: journal
-  
-  test-db:
-    image: postgres:13
-    restart: always
-    ports:
-      - 5435:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: journal
+      - 3333:3333
+    depends_on:
+      - postgres
+    env_file:
+      - .env
 
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      
+volumes:
+  postgres:
+    name: nest-db
+
+
+  # db:
+  #   image: postgres:13
+  #   restart: always
+  #   ports:
+  #     - 5434:5432
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: 123
+  #     POSTGRES_DB: journal
+  # test-db:
+  #   image: postgres:13
+  #   restart: always
+  #   ports:
+  #     - 5435:5432
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: 123
+  #     POSTGRES_DB: journal
