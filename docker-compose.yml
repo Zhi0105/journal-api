@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   nest-api:
-    container_name: hopeful
+    container_name: journal
     build:
       context: .
       dockerfile: Dockerfile
@@ -27,7 +27,7 @@ volumes:
   postgres:
     name: nest-db
 
-
+  #  LOCAL CONFIGURATION
   # db:
   #   image: postgres:13
   #   restart: always

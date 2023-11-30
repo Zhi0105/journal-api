@@ -58,7 +58,23 @@ CLONE GUIDE COMMAND:
 
 <!--
 PROD:
-docker build -t filofax .
-docker run -p 3333:3333 --env-file .env -d filofax
-docker-compose up -d
+
+  ENV:
+    DATABASE_URL=postgresql://postgres:123@postgres:5432/filofax?schema=filofax
+    JWT_SECRET=super-secret
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=123
+    POSTGRES_DB=filofax
+
+
+ USING 2 dockerfile (PROD FOR GOOGLE CLOUD DEPLOYMENT):
+    docker build -f ./prisma/Dockerfile -t postgres .
+    docker build -t journal-api .
+    docker network create nestapi
+    docker run --name postgres  -v nest-db:/var/lib/postgresql/data -p 5432:5432 --env-file .env -d postgres
+    docker run --name journal-api -e POSTGRES_DB=filofax -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=123 -p 3333:3333 --net nestapi  --env-file .env -d journal-api
+
+  OR
+ USING 2 docker comose yml (PROD):
+    docker-compose up
  -->
