@@ -59,6 +59,14 @@ CLONE GUIDE COMMAND:
 <!--
 PROD:
 
+  ENV:
+    DATABASE_URL=postgresql://postgres:123@postgres:5432/filofax?schema=filofax
+    JWT_SECRET=super-secret
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=123
+    POSTGRES_DB=filofax
+
+
  USING 2 dockerfile (PROD FOR GOOGLE CLOUD DEPLOYMENT):
     docker build -f ./prisma/Dockerfile -t postgres .
     docker build -t journal-api .

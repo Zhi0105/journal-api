@@ -27,7 +27,7 @@ volumes:
   postgres:
     name: nest-db
 
-
+  #  LOCAL CONFIGURATION
   # db:
   #   image: postgres:13
   #   restart: always
