@@ -76,5 +76,5 @@ PROD:
 
   OR
  USING 2 docker comose yml (PROD):
-    docker-compose up
+    docker-compose up -d
  -->
