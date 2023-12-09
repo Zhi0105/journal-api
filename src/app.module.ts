@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { TaskModule } from './task/task.module';
+import { RootModule } from './root/root.module';
 
 @Module({
   imports: [ 
@@ -15,7 +16,7 @@ import { TaskModule } from './task/task.module';
       UserModule, 
       CategoryModule,
       TaskModule, 
-      PrismaModule  
+      PrismaModule, RootModule  
     ],
 })
 

@@ -3,7 +3,7 @@
 //  NEST JS COMMAND :
     // nest new (project_name) --typescript
     // nest g module (module_name)
-    // nest g controller (controller_name)
+    // nest g controller (controller_name) --no-spec
     // nest g service (service_name) --no-spec
 
     NEST PACKAGE HELPERS:

@@ -1,42 +1,14 @@
 version: '3.8'
 services:
-  nest-api:
-    container_name: journal
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 3333:3333
-    depends_on:
-      - postgres
-    env_file:
-      - .env
-
-  postgres:
+ db:
     image: postgres:13
-    container_name: postgres
     restart: always
     ports:
       - 5432:5432
-    env_file:
-      - .env
-    volumes:
-      - postgres:/var/lib/postgresql/data
-      
-volumes:
-  postgres:
-    name: nest-db
-
-  #  LOCAL CONFIGURATION
-  # db:
-  #   image: postgres:13
-  #   restart: always
-  #   ports:
-  #     - 5434:5432
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: 123
-  #     POSTGRES_DB: journal
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: journal
   # test-db:
   #   image: postgres:13
   #   restart: always
@@ -46,3 +18,5 @@ volumes:
   #     POSTGRES_USER: postgres
   #     POSTGRES_PASSWORD: 123
   #     POSTGRES_DB: journal
+
+ 
