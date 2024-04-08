@@ -5,7 +5,7 @@ export class RootController {
   @Get('')
 
   root() {
-    return "Filofax API"
+    return "Journal App API"
   }
 
 }
