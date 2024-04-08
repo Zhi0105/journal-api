@@ -26,8 +26,9 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## ERD
+![journal ERD](https://github.com/Zhi0105/journal-api/assets/88585596/44e5d3f1-aa25-46e1-b4ad-df5e95a52e5a)
 ## Installation
-
 ```bash
 $ yarn install
 
